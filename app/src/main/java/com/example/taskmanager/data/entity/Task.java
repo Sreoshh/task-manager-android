@@ -12,12 +12,21 @@ public class Task {
     private String title;
     private String description;
     private boolean completed;
+    private long dueDateTime;
+    private boolean reminderEnabled;
+    private int repeatIntervalDays;
 
-    public Task(String title, String description) {
+
+    public Task(String title, String description, long dueDateTime,
+                boolean reminderEnabled, int repeatIntervalDays) {
         this.title = title;
         this.description = description;
         this.completed = false;
+        this.dueDateTime = dueDateTime;
+        this.reminderEnabled = reminderEnabled;
+        this.repeatIntervalDays = repeatIntervalDays;
     }
+
 
     public int getId() {
         return id;
@@ -41,5 +50,17 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public long getDueDateTime() {
+        return dueDateTime;
+    }
+
+    public boolean isReminderEnabled() {
+        return reminderEnabled;
+    }
+
+    public int getRepeatIntervalDays() {
+        return repeatIntervalDays;
     }
 }
