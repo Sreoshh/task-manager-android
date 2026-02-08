@@ -11,13 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.taskmanager.data.entity.Task
 import com.example.taskmanager.reminder.ReminderUtil
-import com.example.taskmanager.viewmodel.TaskViewModel
 import java.util.Calendar
 import java.util.Date
 
 class AddTaskActivity : AppCompatActivity() {
 
-    private lateinit var taskViewModel: TaskViewModel
+    private lateinit var taskViewModel: `TaskViewModel.kt`
     private var selectedTime: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,7 @@ class AddTaskActivity : AppCompatActivity() {
         val editRepeatDays = findViewById<EditText>(R.id.edit_repeat_days)
         val buttonSave = findViewById<Button>(R.id.button_save_task)
 
-        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+        taskViewModel = ViewModelProvider(this)[`TaskViewModel.kt`::class.java]
 
         // 📅 Date & Time Picker
         buttonPickDate.setOnClickListener {

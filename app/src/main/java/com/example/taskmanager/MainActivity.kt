@@ -9,12 +9,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.adapter.TaskAdapter
-import com.example.taskmanager.viewmodel.TaskViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var taskViewModel: TaskViewModel
+    private lateinit var taskViewModel: `TaskViewModel.kt`
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
-        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+        taskViewModel = ViewModelProvider(this)[`TaskViewModel.kt`::class.java]
 
         taskViewModel.getAllTasks().observe(this) { tasks ->
             adapter.setTasks(tasks)
