@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://10.0.2.2:8080"
+    private const val BASE_URL = "https://task-manager-backend-n4bo.onrender.com"
     // 10.0.2.2 = localhost for Android emulator
     // (we’ll handle real device later)
 
