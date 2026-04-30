@@ -12,15 +12,18 @@ class TaskRepository(
     private val taskDao: TaskDao
 ) {
 
-    // 🔹 LOCAL (Room)
+    //  LOCAL (Room)
     fun getAllTasks() = taskDao.getAllTasks()
 
     suspend fun insert(task: Task) {
         withContext(Dispatchers.IO) {
             taskDao.insert(task)
 
-            // send to backend
-            RetrofitClient.taskApi.createTask(task.toDto())
+            try {
+                RetrofitClient.taskApi.createTask(task.toDto())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -28,9 +31,12 @@ class TaskRepository(
         withContext(Dispatchers.IO) {
             taskDao.delete(task)
 
-            // delete from backend
-            task.id?.let {
-                RetrofitClient.taskApi.deleteTask(it)
+            try {
+                task.id.let {
+                    RetrofitClient.taskApi.deleteTask(it.toLong())
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -39,18 +45,29 @@ class TaskRepository(
         withContext(Dispatchers.IO) {
             taskDao.update(task)
 
-            task.id?.let {
-                RetrofitClient.taskApi.updateTask(it, task.toDto())
+            try {
+                task.id.let {
+                    RetrofitClient.taskApi.updateTask(it.toLong(), task.toDto())
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
 
-    // 🔄 SYNC: backend → local
     suspend fun syncFromBackend() {
         withContext(Dispatchers.IO) {
-            val remoteTasks = RetrofitClient.taskApi.getAllTasks()
-            taskDao.deleteAll()
-            taskDao.insertAll(remoteTasks.map { it.toEntity() })
+            try {
+                val remoteTasks = RetrofitClient.taskApi.getAllTasks()
+
+                if (remoteTasks.isNotEmpty()) {
+                    taskDao.deleteAll()
+                    taskDao.insertAll(remoteTasks.map { it.toEntity() })
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

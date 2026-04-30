@@ -9,7 +9,7 @@ import com.example.taskmanager.data.entity.Task
 import com.example.taskmanager.data.repository.TaskRepository
 import kotlinx.coroutines.launch
 
-class `TaskViewModel.kt`(application: Application) : AndroidViewModel(application) {
+class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: TaskRepository
     private val allTasks: LiveData<List<Task>>

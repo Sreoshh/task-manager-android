@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,13 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
     private List<Task> tasks = new ArrayList<>();
+
+    // 🎨 Background images
+    private final int[] images = {
+            R.drawable.bg1,
+            R.drawable.bg2,
+            R.drawable.bg3
+    };
 
     // 🔹 Listener for checkbox changes
     public interface OnTaskCheckedListener {
@@ -44,6 +52,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
         holder.title.setText(currentTask.getTitle());
         holder.description.setText(currentTask.getDescription());
+
+        // 🎨 Set background image (rotating)
+        int imageRes = images[position % images.length];
+        holder.imageView.setImageResource(imageRes);
 
         // Avoid triggering listener when recycling views
         holder.checkBox.setOnCheckedChangeListener(null);
@@ -73,15 +85,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     }
 
     static class TaskHolder extends RecyclerView.ViewHolder {
+
         private final TextView title;
         private final TextView description;
         private final CheckBox checkBox;
+        private final ImageView imageView; // 🔥 NEW
 
         public TaskHolder(View itemView) {
             super(itemView);
+
             title = itemView.findViewById(R.id.text_title);
             description = itemView.findViewById(R.id.text_description);
             checkBox = itemView.findViewById(R.id.checkbox_completed);
+            imageView = itemView.findViewById(R.id.image_bg); // 🔥 IMPORTANT
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.taskmanager.data.dao;
 
+import androidx.room.OnConflictStrategy;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -15,11 +16,11 @@ import java.util.List;
 public interface TaskDao {
 
     // 🔹 Insert single task
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Task task);
 
     // 🔹 Insert multiple tasks (for backend sync)
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Task> tasks);
 
     // 🔹 Delete single task
